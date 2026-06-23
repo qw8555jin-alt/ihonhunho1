@@ -15,8 +15,6 @@ export default function ContactForm() {
       <form 
         name="contact" 
         method="POST" 
-        data-netlify="true"
-        netlify-honeypot="bot-field"
         action="/success"
       >
         {/* Netlify Forms 필수 숨김 필드 */}

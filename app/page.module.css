@@ -110,6 +110,7 @@
   font-size: 2.5rem;
   color: var(--primary);
   margin-bottom: 1rem;
+  word-break: keep-all;
 }
 
 .featuresContainer {
@@ -143,6 +144,7 @@
   font-size: 1.4rem;
   margin-bottom: 1rem;
   color: var(--primary);
+  word-break: keep-all;
 }
 
 .featureDesc {
@@ -207,17 +209,52 @@
 
 /* 5. Social Proof Section */
 .socialProof {
-  padding: 6rem 2rem;
+  padding: 6rem 0; /* marquee full width */
   background-color: var(--primary); /* Navy for impact */
   border-top: 1px solid rgba(212, 175, 55, 0.1);
+  overflow: hidden;
+}
+
+.marqueeWrapper {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  padding: 1rem 0;
+}
+
+.marqueeWrapper::before,
+.marqueeWrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.marqueeWrapper::before {
+  left: 0;
+  background: linear-gradient(to right, var(--primary) 0%, transparent 100%);
+}
+
+.marqueeWrapper::after {
+  right: 0;
+  background: linear-gradient(to left, var(--primary) 0%, transparent 100%);
 }
 
 .proofContainer {
-  max-width: 1000px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  display: flex;
   gap: 2rem;
+  width: max-content;
+  animation: marqueeScroll 60s linear infinite;
+  padding-left: 2rem;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 1rem)); }
 }
 
 .proofCard {
@@ -225,22 +262,44 @@
   padding: 2.5rem;
   border-radius: 8px;
   border: 1px solid rgba(212, 175, 55, 0.1);
-  position: relative;
-  text-align: center;
+  width: 420px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  transition: transform 0.3s ease;
+}
+
+.proofCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .proofCard h3 {
   font-size: 1.3rem;
-  color: var(--text-muted);
-  margin-bottom: 1rem;
+  color: var(--primary);
+  margin-bottom: 1.2rem;
+  font-weight: 700;
 }
 
 .proofResult {
-  font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.proofIntro {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.proofHighlight {
+  font-size: 1.15rem;
   font-weight: 700;
-  color: var(--primary);
-  margin-top: 1.5rem;
-  line-height: 1.4;
+  color: var(--secondary);
+  line-height: 1.5;
   word-break: keep-all;
 }
 
@@ -259,6 +318,7 @@
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
   color: var(--primary);
+  word-break: keep-all;
 }
 
 .contactDesc {
@@ -274,8 +334,8 @@
   .subtitle { font-size: 1.15rem; }
   .agitationText { font-size: 1.3rem; }
   .agitationCore { font-size: 1.2rem; padding: 1.5rem; }
-  .sectionTitle { font-size: 2rem; }
+  .sectionTitle { font-size: 1.8rem; }
   .processStep { flex-direction: column; gap: 1rem; }
   .proofResult { font-size: 1.3rem; }
-  .contactTitle { font-size: 2rem; }
+  .contactTitle { font-size: 1.8rem; }
 }

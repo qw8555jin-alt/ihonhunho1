@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from 'react';
 import styles from './ContactForm.module.css';
 
 export default function ContactForm() {
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+
   return (
     <div className={styles.formContainer}>
       {/* 
@@ -152,9 +155,47 @@ export default function ContactForm() {
           />
         </div>
 
+        <div className={styles.privacyGroup}>
+          <label className={styles.privacyLabel}>
+            <input 
+              type="checkbox" 
+              name="개인정보_수집_동의" 
+              required 
+              className={styles.privacyCheckbox} 
+            />
+            <span>[필수] 개인정보 수집 및 이용에 동의합니다.</span>
+          </label>
+          <button 
+            type="button" 
+            className={styles.privacyToggleBtn} 
+            onClick={() => setIsPrivacyOpen(!isPrivacyOpen)}
+          >
+            [상세보기]
+          </button>
+        </div>
+
+        {isPrivacyOpen && (
+          <div className={styles.privacyContent}>
+            <strong>■ 개인정보 수집 및 이용 동의 (필수)</strong><br/><br/>
+            구명도는 변호사 맞춤형 숏폼 마케팅 제안서 발송 및 서비스 상담을 위해 아래와 같이 개인정보를 수집 및 이용합니다. 내용을 자세히 읽으신 후 동의 여부를 결정해 주시기 바랍니다.<br/><br/>
+            1. 개인정보의 수집 및 이용 목적<br/>
+            - 로펌/사무실 맞춤형 숏폼 마케팅 제안서 및 분석 리포트 발송<br/>
+            - 서비스 이용에 따른 본인 식별 및 원활한 상담 의사소통 경로 확보<br/><br/>
+            2. 수집하는 개인정보의 항목<br/>
+            - 필수항목: 사무실명, 이메일 주소, 주 활동 지역(대략적인 위치)<br/><br/>
+            3. 개인정보의 보유 및 이용 기간<br/>
+            - 목적 달성 완료 후 즉시 파기 (단, 상담 및 안내를 위해 신청일로부터 최대 1년간 보관 후 지체 없이 파기합니다.)<br/><br/>
+            4. 동의를 거부할 권리 및 불이익<br/>
+            - 귀하는 본 개인정보 수집 및 이용 동의를 거부할 권리가 있습니다. 단, 동의를 거부하실 경우 맞춤형 제안서 발송 및 상담 서비스 이용이 제한될 수 있습니다.
+          </div>
+        )}
+
         <button type="submit" className={styles.submitBtn}>
           무료 상담 신청하기
         </button>
+        <p style={{textAlign: 'center', marginTop: '1rem', color: 'var(--text-muted)', fontSize: '0.9rem'}}>
+          * 영업일 기준 2일 이내 이메일로 답변 드립니다.
+        </p>
       </form>
     </div>
   );

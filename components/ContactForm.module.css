@@ -1,0 +1,94 @@
+.formContainer {
+  background-color: var(--bg-alt); /* White background */
+  padding: 3rem;
+  border-radius: 8px; /* 각지게 처리 */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  max-width: 600px;
+  margin: 0 auto;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--primary); /* Navy label */
+  font-size: 0.95rem;
+}
+
+.input, .select, .textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 4px; /* 각지게 처리 */
+  background-color: var(--bg-main); /* Light gray background for inputs */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--text-main);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.input:focus, .select:focus, .textarea:focus {
+  outline: none;
+  border-color: var(--secondary); /* Gold outline */
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+}
+
+.input::placeholder, .textarea::placeholder {
+  color: #94a3b8;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.5;
+}
+
+.radioGroup {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.radioInput {
+  accent-color: var(--secondary);
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 16px 32px;
+  margin-top: 1rem;
+  background-color: var(--primary); /* Navy button as user requested */
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px; /* 각지게 처리 */
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submitBtn:hover {
+  background-color: var(--secondary); /* Gold on hover */
+}
+
+@media (max-width: 768px) {
+  .formContainer {
+    padding: 2rem 1.5rem;
+  }
+}

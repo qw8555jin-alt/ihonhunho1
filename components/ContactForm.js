@@ -5,18 +5,47 @@ import styles from './ContactForm.module.css';
 
 export default function ContactForm() {
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const myForm = e.target;
+    const formData = new FormData(myForm);
+    const searchParams = new URLSearchParams();
+    for (const pair of formData) {
+      searchParams.append(pair[0], pair[1]);
+    }
+
+    try {
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: searchParams.toString(),
+      });
+      setShowPopup(true);
+      myForm.reset();
+    } catch (error) {
+      alert("접수 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
-    <div className={styles.formContainer}>
-      {/* 
-        Netlify Forms 연동을 위한 설정
-        Netlify에 배포 시 이 폼 태그를 자동으로 인식하여 이메일 알림을 보냅니다.
-      */}
-      <form 
-        name="contact" 
-        method="POST" 
-        action="/success"
-      >
+    <>
+      <div className={styles.formContainer}>
+        {/* 
+          Netlify Forms 연동을 위한 설정
+          Netlify에 배포 시 이 폼 태그를 자동으로 인식하여 이메일 알림을 보냅니다.
+        */}
+        <form 
+          name="contact" 
+          method="POST" 
+          onSubmit={handleSubmit}
+        >
         {/* Netlify Forms 필수 숨김 필드 */}
         <input type="hidden" name="form-name" value="contact" />
         <div style={{ display: 'none' }}>
@@ -188,13 +217,27 @@ export default function ContactForm() {
           </div>
         )}
 
-        <button type="submit" className={styles.submitBtn}>
-          무료 상담 신청하기
+        <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+          {isSubmitting ? '접수 중...' : '무료 상담 신청하기'}
         </button>
         <p style={{textAlign: 'center', marginTop: '1rem', color: 'var(--text-muted)', fontSize: '0.9rem'}}>
           * 영업일 기준 2일 이내 이메일로 답변 드립니다.
         </p>
       </form>
     </div>
+
+    {showPopup && (
+      <div className={styles.popupOverlay}>
+        <div className={styles.popupContent}>
+          <div className={styles.popupIcon}>✅</div>
+          <h3 className={styles.popupTitle}>접수가 완료되었습니다!</h3>
+          <p className={styles.popupDesc}>남겨주신 소중한 정보를 바탕으로<br/><b>영업일 기준 2일 이내</b>로 연락드리겠습니다.</p>
+          <button className={styles.popupBtn} onClick={() => setShowPopup(false)}>
+            확인
+          </button>
+        </div>
+      </div>
+    )}
+    </>
   );
 }

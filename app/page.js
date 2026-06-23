@@ -1,5 +1,6 @@
 import styles from './page.module.css';
 import ContactForm from '../components/ContactForm';
+import RecentSignupToast from '../components/RecentSignupToast';
 import Link from 'next/link';
 import HeroSlider from '../components/HeroSlider';
 
@@ -194,6 +195,8 @@ export default function Home() {
         </div>
         <ContactForm />
       </section>
+      
+      <RecentSignupToast />
     </main>
   );
 }

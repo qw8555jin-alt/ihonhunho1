@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './RecentSignupToast.module.css';
 
 const LOCATIONS = [
@@ -11,6 +11,7 @@ const LOCATIONS = [
 export default function RecentSignupToast() {
   const [toast, setToast] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  const recentLocations = useRef([]); // 최근 5번 지역 저장
 
   useEffect(() => {
     let timeoutId;
@@ -21,7 +22,19 @@ export default function RecentSignupToast() {
       const randomDelay = Math.floor(Math.random() * (10000 - 5000 + 1) + 5000);
       
       timeoutId = setTimeout(() => {
-        const randomLocation = LOCATIONS[Math.floor(Math.random() * LOCATIONS.length)];
+        // 최근 5번 이내에 나온 지역 제외
+        const availableLocations = LOCATIONS.filter(
+          loc => !recentLocations.current.includes(loc)
+        );
+        
+        const randomLocation = availableLocations[Math.floor(Math.random() * availableLocations.length)];
+        
+        // 큐(Queue) 업데이트: 새 지역 추가 및 크기 유지
+        recentLocations.current.push(randomLocation);
+        if (recentLocations.current.length > 5) {
+          recentLocations.current.shift();
+        }
+
         setToast(`${randomLocation}에서 진단 신청을 완료했습니다.`);
         setIsVisible(true);
         

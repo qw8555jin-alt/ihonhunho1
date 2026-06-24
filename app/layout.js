@@ -39,6 +39,20 @@ export default function RootLayout({ children }) {
             `,
           }}
         />
+        <Script
+          src="https://karrot-pixel.business.daangn.com/karrot-pixel.js"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="karrot-pixel"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.karrotPixel.init('1782276785599529001');
+              window.karrotPixel.track('ViewPage');
+            `,
+          }}
+        />
       </head>
       <body>
         {children}

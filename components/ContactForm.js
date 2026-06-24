@@ -32,6 +32,11 @@ export default function ContactForm() {
       if (typeof window !== 'undefined' && window.fbq) {
         window.fbq('track', 'CompleteRegistration');
       }
+      
+      // 당근픽셀 등록 완료 이벤트 전송
+      if (typeof window !== 'undefined' && window.karrotPixel) {
+        window.karrotPixel.track('CompleteRegistration');
+      }
     } catch (error) {
       alert("접수 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
     } finally {
